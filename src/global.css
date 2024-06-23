@@ -1,0 +1,25 @@
+body {
+  font-family: "Jost", sans-serif;
+  height: 100%;
+  color: var(--color-black);
+}
+
+#app {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* colors */
+  --color-black: #1d1d1d;
+  --color-dark: #2A2F37;
+  --color-grey: #424242;
+  --color-brand: #FFE4E1;
+  --color-bg: #f2f2f2;
+  --color-accent: #e0ff66;
+  --color-white: #fff;
+  --color-error: #FC5500;
+}

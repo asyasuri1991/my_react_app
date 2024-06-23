@@ -1,0 +1,100 @@
+.postCard {
+  border-radius: 20px;
+  padding: 24px;
+  background-color: #F9F6F1;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+
+  & a {
+    color: #333;
+    text-decoration: none
+  }
+}
+.postCard:hover{
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+}
+.postCardBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 1 auto;
+}
+
+.postCardSection {
+  width: fit-content;
+  padding: 10px 20px;
+  border: 1px solid #FDD4E2;
+  border-radius: 20px;
+  font-size: 18px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.postCardSection:hover {
+  background-color: var(--color-brand);
+}
+
+.postCardTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #333;
+  transition: 0.5s;
+}
+
+.postCardText {
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 24px;
+  margin-bottom: 15px;
+}
+
+.postCardBottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+} */
+
+.moreOptionsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.coverImage {
+  margin-bottom: 10px;
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.coverImage img {
+  border-radius: 10px;
+  transition: 1s;
+  /* Время эффекта */
+  display: block;
+}
+
+.coverImage img:hover {
+  transform: scale(1.1);
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+}

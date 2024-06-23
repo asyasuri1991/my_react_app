@@ -1,0 +1,92 @@
+.header {
+  /* position: sticky; */
+  top: 0;
+  background-color: var(--color-white);
+  padding: 24px 0px;
+  border-bottom: 1px solid var(--color-bg);
+}
+
+.headerContainer {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoImg {
+  height: 54px;
+}
+
+.centerSection {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  display: block;
+  top: 8px;
+  left: 16px;
+}
+
+.searchInput {
+  margin-left: 10px;
+  width: 600px;
+  outline: none;
+  padding: 10px 10px 10px 40px;
+  background-color: var(--color-bg);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--color-dark);
+  transition: all 0.4s ease;
+  font-size: 18px;
+}
+
+.searchInput:focus {
+  border: 1px solid var(--color-grey);
+}
+
+.searchInput::placeholder {
+  font-size: 18px;
+  color: var(--color-dark);
+  opacity: 0.6;
+}
+
+.headerLogIn {
+  margin-left: 10px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  background-color: var(--color-white);
+  color: var(--color-grey);
+  padding: 10px 16px;
+  border: var(--color-grey) 1px solid;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.headerSubscribe {
+  margin-left: 10px;
+  border: none;
+  outline: none;
+  background-color: var(--color-brand);
+  padding: 10px 16px;
+  border: var(--color-grey) 1px solid;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-grey);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-bg);
+  border-radius: 50%;
+  margin-left: 10px;
+  overflow: hidden;
+}

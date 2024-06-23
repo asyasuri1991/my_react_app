@@ -1,0 +1,108 @@
+.createPostFormContainer {
+    min-width: 500px;
+    max-width: 1000px;
+    max-height: 800px;
+    overflow-y: auto;
+    margin: 50px auto;
+    padding: 24px;
+    border: 4px solid var(--color-brand);
+    border-radius: 8px;
+    background-color: var(--color-white);
+}
+
+.heading {
+    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.createPostForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.formField {
+    margin-bottom: 24px;
+}
+
+.inputField,
+.textareaField,
+.fileInput {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    border: 1px solid var(--color-bg);
+    border-radius: 4px;
+}
+
+.textareaField {
+    min-height: 500px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.errorMessage {
+    color: var(--color-error);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--color-brand);
+    color: var(--color-dark);
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    line-height: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        /* background-color: #c9e55b; */
+        filter: brightness(95%);
+    }
+
+    &:disabled {
+        background-color: var(--color-bg);
+        cursor: not-allowed;
+    }
+}
+
+
+.resetButton {
+    margin-top: 16px;
+    padding: 10px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}
+
+.headerSubscribe {
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: var(--color-brand);
+    padding: 10px 16px;
+    border: var(--color-grey) 1px solid;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--color-grey);
+}

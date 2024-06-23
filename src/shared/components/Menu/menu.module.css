@@ -1,0 +1,171 @@
+.burgerButton {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burgerButton {
+  display: flex;
+  position: relative;
+  z-index: 10;
+}
+
+.burger,
+.burger::after,
+.burger::before {
+  height: 3px;
+  width: 30px;
+  background-color: #666;
+  border-radius: 10px;
+  display: block;
+  transition: all 0.5s ease;
+}
+
+.burger {
+  margin: 10px 0px;
+  padding: 0;
+  border: none;
+  transition: all 0.5s ease;
+}
+
+.burger::before {
+  content: "";
+  position: relative;
+  top: -10px;
+}
+
+.burger::after {
+  content: "";
+  position: relative;
+  top: 7px;
+}
+
+.burgerButton:hover .burger,
+.burgerButton:hover .burger::after,
+.burgerButton:hover .burger::before {
+  background-color: #FDD4E2;
+}
+
+.burgerButton.active .burger {
+  background-color: transparent;
+}
+
+.burgerButton.active .burger::before {
+  transform-origin: top left;
+  transform: rotate(45deg);
+}
+
+.burgerButton.active .burger::after {
+  transform-origin: bottom left;
+  transform: rotate(-45deg);
+}
+
+.cover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.2;
+  z-index: 10;
+  display: none;
+}
+
+.coverShow {
+  display: block;
+}
+
+.menuList {
+  display: flex;
+  list-style: none;
+  gap: 85px;
+  padding: 0;
+  margin: 0;
+}
+
+/* .menuBox {
+  z-index: 11;
+  position: fixed;
+  visibility: hidden;
+  left: -100%;
+  top: 0;
+  width: 320px;
+  height: 100vh;
+  padding: 76px 24px 24px 24px;
+  background: white;
+  box-shadow: 4px 4px 30px 5px rgba(0, 0, 0, 0.1);
+  transition-duration: 0.25s;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.menuBoxSnow {
+  visibility: visible;
+  left: 0;
+}
+
+.menuHeader {
+  background: #FFE4E1;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.closeButtonIcon {
+  width: 50px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+} */
+
+.item {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  padding-bottom: 12px;
+  color: #666;
+  border-bottom: 6px solid transparent;
+}
+.item:hover{
+  border-bottom: 6px solid #FDD4E2;
+
+}
+.level {
+  display: flex;
+  transition: transform 0.2s;
+}
+
+.level>div {
+  min-width: calc(100% + 24px);
+}

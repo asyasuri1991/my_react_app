@@ -1,0 +1,19 @@
+.footerContainer {
+  background-color: var(--color-bg);
+}
+
+.footerMenu {
+  width: 1120px;
+  margin: 0 auto;
+}
+
+.footerMenuList {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  padding: 0;
+}
+
+.footerMenuListItem {
+  text-decoration: none;
+}

@@ -1,0 +1,26 @@
+.inputField,
+.textareaField {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid var(--color-bg);
+    border-radius: 4px;
+
+    &.error {
+        border-color: var(--color-error);
+    }
+}
+
+.textareaField {
+    min-height: 100px;
+}
+
+.errorMessage {
+    color: var(--color-error);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+
+
+
