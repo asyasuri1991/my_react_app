@@ -1,15 +1,18 @@
 import s from './footer.module.css';
+import Logo from 'assets/icons/logo_plate.png';
 
 export const Footer = () => {
   return (
     <footer className={s.footerContainer}>
-      <nav className={s.footerMenu}>
-        <ul className={s.footerMenuList}>
-          <li className={s.footerMenuListItem}>Рецепты</li>
-          <li className={s.footerMenuListItem}>Обо мне</li>
-          <li className={s.footerMenuListItem}>Контакты</li>
-        </ul>
-      </nav>
+      <div className={s.footerContent}>
+        <div className={s.footerBox}>
+          <img src={Logo} alt="logo" className={s.footerLogo} />
+          <span className={s.footerTitle}>Готовим с любовью</span>
+        </div>
+        <div className={s.footerBox}>
+          <span className={s.footerText}>© ООО «Блог диджитал», 2024</span>
+        </div>
+      </div>
     </footer>
   );
 };

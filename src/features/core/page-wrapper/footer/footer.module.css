@@ -1,19 +1,34 @@
 .footerContainer {
+  margin-top: 24px;
+  padding: 24px 0px;
   background-color: var(--color-bg);
+  bottom: 0;
 }
 
-.footerMenu {
-  width: 1120px;
+.footerContent {
+  max-width: 1140px; 
   margin: 0 auto;
-}
-
-.footerMenuList {
   display: flex;
-  list-style: none;
-  gap: 20px;
-  padding: 0;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.footerMenuListItem {
-  text-decoration: none;
+.footerBox {
+  display: flex;
+  align-items: center;
+}
+.footerTitle{
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--color-grey);
+}
+.footerText {
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--color-grey);
+}
+.footerLogo{
+  height: 40px;
+  margin-right: 24px;
 }
