@@ -44,7 +44,7 @@
 }
 
 .postCardBreadcrumbsLink.current {
-  color: var(--color-black);
+  color: #333;
 }
 
 .postCardInfo {

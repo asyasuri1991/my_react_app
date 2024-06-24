@@ -1,37 +1,70 @@
-// import { ArticleView } from 'features/Article/ui/Article';
-// import { UserProfile } from 'features/ProfilePage';
-// import { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import Loader from 'shared/components/loader';
-// import { Article } from 'shared/types/article';
+import { ArticleView } from 'features/Article/ui/Article';
+import { UserProfile } from 'features/ProfilePage';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Loader from 'shared/components/loader';
+import { Article } from 'shared/types/article';
+import { get } from 'transport';
 
 export const ProfilePage = () => {
-//   const { userId } = useParams();
+  const { userId } = useParams();
 
-//   const [article, setArticle] = useState<Article | null>(null);
+  const [articles, setArticles] = useState<Article[] | null>(null);
 
-//   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-//   useEffect(() => {
-//     setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
 
-//     fetch(`https://ef94cb56b136da80.mokky.dev/articles?${userId}`)
-//       .then(res => res.json())
-//       .then((articlesData: Article) => {
-//         setArticle(articlesData);
-//       })
-//       .catch(console.error)
-//       .finally(() => setIsLoading(false));
-//   }, [userId]);
+    get<Article[]>(`/articles?${userId}`)
+      
+      .then(({data}) => {
+        setArticles(data);
+        console.log(data);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, [userId]);
 
-//   if (!article || isLoading) return <Loader />;
+  if (!articles || isLoading) return <Loader />;
 
-  return <div></div>
-//<ArticleView article={article} />;
-//   // (
-//     // <div>
-//     //   <h2>Hello, world</h2>
-//     //   <UserProfile article={article}/>
-//     // </div>
-//   //);
+  return (
+    <div>
+      <h2>Hello, world</h2>
+
+<UserProfile postData={{
+        id: 0,
+        section: '',
+        date: '',
+        title: '',
+        coverImage: '',
+        views: 0,
+        likes: 0,
+        comments: 0,
+        bookmarks: 0,
+        content: '',
+        ingredients: [],
+        description: [],
+        userId: 0,
+        user: {
+          fullName: '',
+          email: '',
+          id: 0,
+          avatar: ''
+        },
+        time: {
+          preparation: '',
+          cooking: '',
+          all: ''
+        },
+        nutrients: {
+          cal: 0,
+          protein: 0,
+          fat: 0,
+          carb: 0
+        },
+        portion: 0
+      }} />
+    </div>
+  );
 };

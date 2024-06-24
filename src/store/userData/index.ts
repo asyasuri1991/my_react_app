@@ -1,31 +1,29 @@
-import { createSlice /* , PayloadAction */ } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { STORAGE_KEYS, getStorageItem } from '../../utils/storage';
 import { postAuthData } from './effects';
 
-export interface User {
-  fullName: string | null;
-  email: string | null;
-  id: number | null;
-  avatar: string | null;
-  token: string | null;
+export interface UserInfo {
+  fullName: string;
+  email: string;
+  avatar: string;
+  token: string;
+  id: number;
 }
 
-type UserDataState = {
-  userData: User;
+interface StateStore {
+  user: UserInfo;
+  // theme: "theme-dark" | "theme-light";
   isLoading: boolean;
   error: string | null;
-};
+  isAuth: boolean;
+}
 
-const initialState: UserDataState = {
-  userData: {
-    fullName: null,
-    email: null,
-    id: null,
-    avatar: null,
-    token: null,
-  },
+const initialState: StateStore = {
+  user: {} as UserInfo,
   isLoading: false,
   error: null,
+  // theme: "theme-light",
+  isAuth: false,
 };
 
 export const userDataSlice = createSlice({
@@ -33,12 +31,20 @@ export const userDataSlice = createSlice({
   initialState,
   reducers: {
     clearUserData: () => initialState,
+    setIsAuth: (state, action) => {
+      state.isAuth = action.payload;
+    },
+    setUserInfo: (state, action) => {
+      state.user = action.payload;
+    },
   },
   selectors: {
-    getToken: state => state.userData.token,
+    getToken: state => state.user.token,
     getIsLoading: state => state.isLoading,
-    getUserAvatar: state => state.userData.avatar,
-    getUserId: state => state.userData.id,
+    getUserAvatar: state => state.user.avatar,
+    getUserId: state => state.user.id,
+    getIsAuth: state => state.isAuth,
+    getName: state => state.user.fullName,
   },
   extraReducers: builder => {
     builder
@@ -47,7 +53,8 @@ export const userDataSlice = createSlice({
       })
       .addCase(postAuthData.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userData = action.payload;
+        state.user = action.payload;
+        state.isAuth = true;
       })
       .addCase(postAuthData.rejected, (state, action) => {
         state.isLoading = false;
@@ -56,16 +63,16 @@ export const userDataSlice = createSlice({
   },
 });
 
-export const { clearUserData } = userDataSlice.actions;
+export const { clearUserData, setIsAuth, setUserInfo } = userDataSlice.actions;
 
-export const { getIsLoading, getToken, getUserAvatar, getUserId } = userDataSlice.selectors;
+export const { getIsLoading, getToken, getUserAvatar, getUserId, getIsAuth, getName } = userDataSlice.selectors;
 
-export const defineUserDataFromStorage = (): UserDataState => {
-  const userData = getStorageItem(STORAGE_KEYS.USER_DATA);
+export const defineUserDataFromStorage = (): StateStore => {
+  const user = getStorageItem(STORAGE_KEYS.USER_DATA);
   const initState = userDataSlice.getInitialState();
 
-  if (userData) {
-    return { ...initState, userData };
+  if (user) {
+    return { ...initState, user };
   }
 
   return initState;

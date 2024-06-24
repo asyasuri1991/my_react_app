@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CreateArticleForm } from '../features/CreateArticle/model/schemes/createArticles';
 import { Article } from '../shared/types/article';
-import { RootState } from 'store';
 
 type PostCardProps = {
   postData: Article;
@@ -22,9 +21,8 @@ export const articlesApi = createApi({
   reducerPath: 'articles',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ef94cb56b136da80.mokky.dev',
-    prepareHeaders: (headers, { getState }) => {
-      const store = getState() as RootState;
-      const token = store.userData.userData.token;
+    prepareHeaders: headers => {
+      const token = localStorage.getItem('token');
       if (token) {
         headers.set('Authorization', token);
       }

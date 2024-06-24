@@ -10,7 +10,7 @@ export const postAuthData = createAsyncThunk('userData/postAuth', async (payload
 
   const userData = { ...data, token };
 
-  setStorageItem(STORAGE_KEYS.TOKEN, token);
+  localStorage.setItem('token', token);
 
   return userData;
 });

@@ -3,34 +3,73 @@ import { Slider } from 'shared/components/Slider';
 import image from 'assets/images/author.jpg';
 import { useSearchParams } from 'react-router-dom';
 import Loader from 'shared/components/loader';
-import { useGetArticlesQuery } from '../services/articles';
+import { useGetArticlesQuery, useLazyGetArticlesQuery } from '../services/articles';
 import s from 'features/mainPage/styles.module.css';
 import { MainBanner } from 'shared/components/MainBanner';
-import { Navbar } from 'shared/components/Navbar';
+import { Container } from '@mui/material';
+import { useState, useEffect } from 'react';
+import Select from 'shared/components/Select';
+import { Article } from 'shared/types/article';
+import { get } from 'transport';
 
 export const MainPage = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [params, setParams] = useSearchParams();
   const section = params.get('section') || 'all';
 
-  const page = Number(params.get('page') || 1);
+  useEffect(() => {
+    setIsLoading(true);
 
-  const setPage = (page: number) => {
-    params.set('page', String(page));
-    setParams(params);
-  };
+    get<Article[]>(`/articles`,{ params: section === 'all' ? {} : { section }})
+    .then(({ data }) => {
+      setArticles(data);
+    })
+    .catch(console.error)
+    .finally(() => setIsLoading(false));
+}, [section]);
+  
 
-  const { data, isLoading, isFetching } = useGetArticlesQuery(page);
+  // const page = Number(params.get('page') || 1);
 
-  if (isLoading) return <Loader />;
-  if (!data?.items) return <div>There are not any articles</div>;
+  // const setPage = (page: number) => {
+  //   params.set('page', String(page));
+  //   setParams(params);
+  // };
+
+  // const { data, isLoading, isFetching } = useGetArticlesQuery(page);
+
+  // if (isLoading) return <Loader />;
+  // if (!articles) return <div>There are not any articles</div>;
 
   return (
-    <div>
+    <Container>
       <MainBanner />
-      <Navbar />
+      <Select
+        value={section}
+        onChange={e => {
+          params.set('section', e.target.value);
+          setParams(params);
+        }}
+        options={[
+          { label: 'Все', value: 'all' },
+          { label: 'Завтраки', value: 'Завтраки' },
+          { label: 'Салаты', value: 'Салаты' },
+          { label: 'Десерты и выпечка', value: 'Десерты и выпечка' },
+          { label: 'Обеды и ужины', value: 'Обеды и ужины' },
+          { label: 'Закуски', value: 'Закуски' },
+          { label: 'Соусы', value: 'Соусы' },
+        ]}
+      />
+
       <h2 className={s.heading}>Вся лента</h2>
-      <ArticleList articles={data.items} />
-      <div className={s.pagination}>
+      {/* <ArticleList articles={articles} /> */}
+      {isLoading && <Loader />}
+
+      {!!articles && !isLoading && <ArticleList articles={articles} />}
+      {/* <div className={s.pagination}>
         <button
           className={s.paginationBtn}
           onClick={() => {
@@ -47,7 +86,7 @@ export const MainPage = () => {
         >
           Вперёд
         </button>
-      </div>
+      </div> */}
       <Slider
         slides={[
           {
@@ -62,6 +101,6 @@ export const MainPage = () => {
           },
         ]}
       />
-    </div>
+    </Container>
   );
 };

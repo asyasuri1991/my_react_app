@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from '../../../router/routes';
 import { useAppDispatch } from '../../../store';
-import { getIsLoading, getToken } from '../../../store/userData';
+import { getIsLoading, getToken, setIsAuth } from '../../../store/userData';
 import { postAuthData } from '../../../store/userData/effects';
 import { AuthFormData } from '../../../store/userData/types';
 import Avatar from '@mui/material/Avatar';
@@ -56,11 +56,6 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
     setEmailModalNeeded(false);
   };
 
-  const [passwordModalNeeded, setPasswordModalNeeded] = useState<boolean>(false);
-  const closePasswordModal = () => {
-    setPasswordModalNeeded(false);
-  };
-
   const {
     register,
     handleSubmit,
@@ -70,23 +65,42 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: DataItem) => {
+  const onSubmit = async (dataForm: DataItem) => {
+    if (dataForm.fullName) {
+      try {
+        const { data } = await baseInstance.post('/register', dataForm);
+
+        dispatch(postAuthData(dataForm));
+        localStorage.setItem('token', data.token);
+
+        dispatch(setIsAuth(true));
+        setVisibleModal(false);
+
+        reset();
+      } catch (e) {
+        console.error(e);
+      }
+
+      return;
+    }
+
     try {
-      dispatch(postAuthData(data));
-      setVisibleModal(false);
+      // const users = await fetchData();
+      // console.log(users);
+
+      // const existingEmails = users.map((item: DataItem) => item.email);
+      // if (!existingEmails.includes(dataForm.email)) {
+      //   setEmailModalNeeded(true);
+      //   return;
+      // } else 
+        dispatch(postAuthData(dataForm));
+        dispatch(setIsAuth(true));
+        reset();
+        setVisibleModal(false);
+      
     } catch (error) {
       console.error(error);
     }
-    reset();
-    // const users = await fetchData();
-    // const existingEmails = users.map((item: DataItem) => item.email);
-    // if (!existingEmails.includes(data.email)) {
-    //   setEmailModalNeeded(true);
-    //   return;
-    // } else {
-    //   setPasswordModalNeeded(true);
-    // }
-    // dispatch(postAuthData(data));
   };
 
   return (
@@ -142,21 +156,12 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
               {emailModalNeeded && (
                 <div>
                   <SimpleSnackbar
-                    colorName="success"
+                    colorName="error"
                     text="This email is not registered! Please sign up first!"
                     closeModal={closeEmailModal}
                   />
                 </div>
               )}
-              <div>
-                {passwordModalNeeded && (
-                  <SimpleSnackbar
-                    colorName="error"
-                    text="This password is wrong! Please try again!"
-                    closeModal={closePasswordModal}
-                  />
-                )}
-              </div>
               <Grid container>
                 <Grid item>
                   <Button onClick={() => setIsLogin(false)}>Еще не со мной? Зарегистрируйтесь</Button>

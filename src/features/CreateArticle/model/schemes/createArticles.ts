@@ -1,12 +1,12 @@
-import { number, object, string, array } from 'yup';
+import { number, object, string } from 'yup';
 
 export type CreateArticleForm = {
   title: string;
-  description: string[];
+  description: string;
   coverImage: string;
   content: string;
   section: string;
-  ingredients: string[];
+  ingredients: string;
   portion: number;
   time: {
     preparation: string;
@@ -36,17 +36,17 @@ export const сreateArticleFormValidationScheme = object().shape({
     .max(40, 'Слишком многословно')
     .required('Заголовок обязательный')
     .default(''),
-  cal: number().required('Обязательное для заполнения поле').default(1),
-  protein: number().required('Обязательное для заполнения поле').default(1),
-  fat: number().required('Обязательное для заполнения поле').default(1),
-  carb: number().required('Обязательное для заполнения поле').default(1),
-  preparation: string().required('Обязательное для заполнения поле').default(''),
-  cooking: string().required('Обязательное для заполнения поле ').default(''),
-  all: string().required('Обязательное для заполнения поле').default(''),
-  portion: number().required('Обязательное для заполнения поле').default(1),
-  ingredients: array().required('Обязательное для заполнения поле').default(['']),
-  description: array().required('Обязательное для заполнения поле').default(['']),
-  coverImage: string().required('Обязательное для заполнения поле').default(''),
-  content: string().required('Обязательное для заполнения поле').default(''),
+    cal: number().required('Количество порций нужно указать').default(1),
+    protein:  number().required('Количество порций нужно указать').default(1),
+    fat:  number().required('Количество порций нужно указать').default(1),
+    carb: number().required('Количество порций нужно указать').default(1),
+  preparation: string().required('Ингридиенты обязательны').default(''),
+  cooking: string().required('Ингридиенты обязательны').default(''),
+  all: string().required('Ингридиенты обязательны').default(''),
+  portion: number().required('Количество порций нужно указать').default(1),
+  ingredients: string().required('Ингридиенты обязательны').default(''),
+  description: string().required('Описание обязательно').default(''),
+  coverImage: string().required('Обложка обязательна').default(''),
+  content: string().required('Содержимое обязательно').default(''),
   section: string().default('Завтраки'),
 });

@@ -11,26 +11,14 @@ type PostCardProps = {
 export const PostCard = (props: PostCardProps) => {
   const { postData } = props;
 
-  const sectionLinks: Record<string, string> = {
-    'Обеды и ужины': '/lunch',
-    'Десерты и выпечка': '/desserts',
-    Салаты: '/salads',
-    Завтраки: '/breakfast',
-    Закуски: '/snacks',
-    Соусы: '/sauce',
-  };
-  const sectionLink = sectionLinks[postData.section];
-
   return (
     <div className={s.postCard}>
-      
         <div className={s.coverImage}>
           <img src={postData.coverImage} alt="Cover" />
         </div>
-      
       <div className={s.postCardBox}>
         {/* <div className={s.postCardContent}> */}
-        <span className={s.postCardSection}>{sectionLink && <Link to={sectionLink}>{postData.section}</Link>}</span>
+        <span className={s.postCardSection}><Link to={`${ROUTES.SECTION}/${postData.section}`}>{postData.section}</Link></span>
         <Link to={`${ROUTES.ARTICLE}/${postData.id}`}>
           <h3 className={s.postCardTitle}>{postData.title}</h3>
         </Link>

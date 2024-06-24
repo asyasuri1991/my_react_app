@@ -1,5 +1,4 @@
 import Logo from 'assets/images/logo.png';
-import SearchIcon from 'assets/icons/search.png';
 import { ChangeEvent, useState, useEffect } from 'react';
 import { Menu } from 'shared/components/Menu';
 import s from './header.module.css';
@@ -14,11 +13,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useAppDispatch, useAppSelector } from 'store';
-import { clearUserData, getToken, getUserAvatar } from 'store/userData';
+import { clearUserData, getIsAuth, getName, getToken, getUserAvatar, setIsAuth, setUserInfo } from 'store/userData';
 import { STORAGE_KEYS, clearStorageItem } from 'utils/storage';
+import { baseInstance } from 'transport';
+import { AppBar, Box, Container, InputAdornment, TextField, Toolbar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HTMLInputElement>) => void }) => {
-  const [menuActive, setMenuActive] = useState(false);
   const dispatch = useAppDispatch();
   const [visibleModal, setVisibleModal] = useState(false);
 
@@ -38,44 +39,66 @@ export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HT
     clearStorageItem(STORAGE_KEYS.TOKEN);
     clearStorageItem(STORAGE_KEYS.USER_DATA);
   };
-  const token = useAppSelector(getToken);
+
+  const storedToken = localStorage.getItem('token');
+  useEffect(() => {
+    const checkIsAuth = async () => {
+      if (storedToken) {
+        try {
+          const { data } = await baseInstance.get('/auth_me', {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          });
+          dispatch(setUserInfo(data));
+          dispatch(setIsAuth(true));
+        } catch (e) {
+          console.error(e);
+          dispatch(setIsAuth(false));
+        }
+      } else {
+        dispatch(setIsAuth(false));
+      }
+    };
+
+    void checkIsAuth();
+  }, [dispatch, storedToken]);
 
   return (
-    <header className={s.header}>
-      <SignForm setVisibleModal={setVisibleModal} visibleModal={visibleModal} />
-      <div className={s.headerContainer}>
-        <div className={s.logo}>
+    <AppBar position="static" className={s.header}>
+      <Container>
+        <Toolbar className={s.toolbar}>
+          <SignForm setVisibleModal={setVisibleModal} visibleModal={visibleModal} />
           <Link to={ROUTES.ROOT}>
-            <img src={Logo} alt="logo" className={s.logoImg} />
+            <Box component="img" src={Logo} alt="logo" sx={{ width: { sm: 226, xs: 130 }, objectFit: 'cover' }} />
           </Link>
-        </div>
-
-        <div className={s.centerSection}>
-          <img src={SearchIcon} alt="поиск" className={s.searchIcon} />
-          <input
-            type="text"
+          <TextField
+            fullWidth
             placeholder="Что бы Вы хотели приготовить?"
             className={s.searchInput}
             onChange={onSearchChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
-        </div>
-        {token ? (
-          <>
-            {avatar ? (
+          {storedToken ? (
+            <>
+              {avatar ? (
                 <img className={s.avatar} src={avatar} alt="avatar" />
-            ) : (
+              ) : (
                 <img className={s.avatar} src={AvatarIcon} alt="avatar" />
-            )}
+              )}
 
-            <button className={s.headerLogIn} onClick={handleOpen}>
-              Выйти
-            </button>
-
+              <button className={s.headerLogIn} onClick={handleOpen}>
+                Выйти
+              </button>
             <Dialog
               open={openModal}
-              keepMounted
               onClose={handleClose}
-              aria-describedby="alert-dialog-slide-description"
             >
               <DialogTitle>Вы точно хотите выйти?</DialogTitle>
               <DialogActions>
@@ -90,8 +113,9 @@ export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HT
           </button>
         )}
 
-        <CreateArticleForm />
-      </div>
-    </header>
+          {/* <CreateArticleForm/> */}
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };

@@ -10,7 +10,7 @@ export const Footer = () => {
           <span className={s.footerTitle}>Готовим с любовью</span>
         </div>
         <div className={s.footerBox}>
-          <span className={s.footerText}>© ООО «Блог диджитал», 2024</span>
+          <span className={s.footerText}>© «Семейные рецепты», 2024</span>
         </div>
       </div>
     </footer>

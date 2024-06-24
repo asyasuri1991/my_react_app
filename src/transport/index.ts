@@ -11,9 +11,8 @@ baseInstance.interceptors.request.use(config => {
   const token = userData?.token;
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   }
-
   return config;
 });
 

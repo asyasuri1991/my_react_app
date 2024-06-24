@@ -7,7 +7,7 @@ import { CreateArticleForm } from '../schemes/createArticles';
 export const createArticle = createAsyncThunk('article/createArticle', async (payload: CreateArticleForm, thunkApi) => {
   const state = thunkApi.getState() as RootState;
 
-  const userId = state.userData.userData.id;
+  const userId = state.userData.user.id;
 
   if (!userId) {
     throw new Error('User is not authorized');

@@ -12,16 +12,6 @@ export const ArticleView = ({ article }: ArticleProps) => {
   const ingredientsList = article.ingredients;
   const descriptionList = article.description;
 
-  const sectionLinks: Record<string, string> = {
-    'Обеды и ужины': '/lunch',
-    'Десерты и выпечка': '/desserts',
-    Салаты: '/salads',
-    Завтраки: '/breakfast',
-    Закуски: '/snacks',
-    Соусы: '/sauce',
-  };
-  const sectionLink = sectionLinks[article.section];
-
   return (
     <div className={s.container}>
       <div className={s.postCard}>
@@ -34,11 +24,9 @@ export const ArticleView = ({ article }: ArticleProps) => {
             </li>
             <li className={s.postCardBreadcrumbsItem}>
               <span>
-                {sectionLink && (
-                  <Link to={sectionLink} className={s.postCardBreadcrumbsLink}>
+                  <Link to={`${ROUTES.SECTION}/${article.section}`}className={s.postCardBreadcrumbsLink}>
                     {article.section}
                   </Link>
-                )}
               </span>
             </li>
             <li className={s.postCardBreadcrumbsItem}>
@@ -56,7 +44,7 @@ export const ArticleView = ({ article }: ArticleProps) => {
               <div className={s.postCardAuthor}>
                 <img className={s.avatar} src={article.user.avatar} />
                 <span className={s.postCardText}>
-                  Автор: <Link to={ROUTES.PROFILE}>{article.user.fullName}</Link>
+                  Автор: <Link to={`${ROUTES.PROFILE}/${article.userId}`}>{article.user.fullName}</Link>
                 </span>
               </div>
               <span className={s.postCardText}>{article.date}</span>
@@ -64,29 +52,30 @@ export const ArticleView = ({ article }: ArticleProps) => {
             <div className={s.postCardBlock}>
               <h2 className={s.postCardTitle}>{article.title}</h2>
               <p className={s.postCardText}>{article.content}</p>
+
             </div>
           </div>
         </div>
 
         <div className={s.postCardBox}>
-          <div className={s.postCardTimeContainer}>
-            <div className={s.postCardTimeBox}>
-              <span className={s.postCardTimeSubitle}>Подготовка</span>
-              <span className={s.postCardText}>{article.time.preparation}</span>
-            </div>
-            <div className={s.postCardTimeBox}>
-              <span className={s.postCardTimeSubitle}>Готовка</span>
-              <span className={s.postCardText}>{article.time.cooking}</span>
-            </div>
-            <div className={s.postCardTimeBox}>
-              <span className={s.postCardTimeSubitle}>Общее время</span>
-              <span className={s.postCardText}>{article.time.all}</span>
-            </div>
-            <div className={s.postCardTimeBox}>
-              <span className={s.postCardTimeSubitle}>Число порций</span>
-              <span className={s.postCardText}>{article.portion}</span>
-            </div>
-          </div>
+        <div className={s.postCardTimeContainer}>
+                <div className={s.postCardTimeBox}>
+                  <span className={s.postCardTimeSubitle}>Подготовка</span>
+                  <span className={s.postCardText}>{article.time.preparation}</span>
+                </div>
+                <div className={s.postCardTimeBox}>
+                  <span className={s.postCardTimeSubitle}>Готовка</span>
+                  <span className={s.postCardText}>{article.time.cooking}</span>
+                </div>
+                <div className={s.postCardTimeBox}>
+                  <span className={s.postCardTimeSubitle}>Общее время</span>
+                  <span className={s.postCardText}>{article.time.all}</span>
+                </div>
+                <div className={s.postCardTimeBox}>
+                  <span className={s.postCardTimeSubitle}>Число порций</span>
+                  <span className={s.postCardText}>{article.portion}</span>
+                </div>
+              </div>
           <div className={s.postCardContent}>
             <h3 className={s.postCardSubtitle}>Ингридиенты</h3>
             <div className={s.postCardIngredients}>
@@ -147,6 +136,10 @@ export const ArticleView = ({ article }: ArticleProps) => {
           <div className={s.postCardStatsContainer}>
             <StatsButtons likes={article.likes} />
           </div>
+        </div>
+
+        <div>
+          <h3 className={s.postCardSubtitle}>Вам также может понравиться</h3>
         </div>
       </div>
     </div>
