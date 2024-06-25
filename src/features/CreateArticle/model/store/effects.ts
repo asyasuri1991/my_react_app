@@ -8,6 +8,8 @@ export const createArticle = createAsyncThunk('article/createArticle', async (pa
   const state = thunkApi.getState() as RootState;
 
   const userId = state.userData.user.id;
+  const fullName = state.userData.user.fullName;
+  const avatar = state.userData.user.avatar;
 
   if (!userId) {
     throw new Error('User is not authorized');
@@ -15,6 +17,8 @@ export const createArticle = createAsyncThunk('article/createArticle', async (pa
 
   const body = {
     userId,
+    fullName,
+    avatar,
     date: new Date().toISOString(),
     views: 0,
     likes: 0,

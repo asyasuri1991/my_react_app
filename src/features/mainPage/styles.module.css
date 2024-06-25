@@ -33,3 +33,7 @@
   background-color: var(--color-bg);
   cursor: auto;
 }
+
+.pageSelect{
+  margin-bottom: 40px;
+}

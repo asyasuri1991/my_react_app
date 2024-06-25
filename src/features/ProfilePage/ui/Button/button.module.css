@@ -1,0 +1,19 @@
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 0.5;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.2;
+  }
+}

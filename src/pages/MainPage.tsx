@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react';
 import Select from 'shared/components/Select';
 import { Article } from 'shared/types/article';
 import { get } from 'transport';
+import { SelectAll } from '@mui/icons-material';
 
 export const MainPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -23,14 +24,13 @@ export const MainPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    get<Article[]>(`/articles`,{ params: section === 'all' ? {} : { section }})
-    .then(({ data }) => {
-      setArticles(data);
-    })
-    .catch(console.error)
-    .finally(() => setIsLoading(false));
-}, [section]);
-  
+    get<Article[]>(`/articles`, { params: section === 'all' ? {} : { section } })
+      .then(({ data }) => {
+        setArticles(data);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, [section]);
 
   // const page = Number(params.get('page') || 1);
 
@@ -47,25 +47,25 @@ export const MainPage = () => {
   return (
     <Container>
       <MainBanner />
-      <Select
-        value={section}
-        onChange={e => {
-          params.set('section', e.target.value);
-          setParams(params);
-        }}
-        options={[
-          { label: 'Все', value: 'all' },
-          { label: 'Завтраки', value: 'Завтраки' },
-          { label: 'Салаты', value: 'Салаты' },
-          { label: 'Десерты и выпечка', value: 'Десерты и выпечка' },
-          { label: 'Обеды и ужины', value: 'Обеды и ужины' },
-          { label: 'Закуски', value: 'Закуски' },
-          { label: 'Соусы', value: 'Соусы' },
-        ]}
-      />
-
       <h2 className={s.heading}>Вся лента</h2>
-      {/* <ArticleList articles={articles} /> */}
+      <div className={s.pageSelect}>
+        <Select
+          value={section}
+          onChange={e => {
+            params.set('section', e.target.value);
+            setParams(params);
+          }}
+          options={[
+            { label: 'Все рецепты', value: 'all' },
+            { label: 'Завтраки', value: 'Завтраки' },
+            { label: 'Салаты', value: 'Салаты' },
+            { label: 'Десерты и выпечка', value: 'Десерты и выпечка' },
+            { label: 'Обеды и ужины', value: 'Обеды и ужины' },
+            { label: 'Закуски', value: 'Закуски' },
+            { label: 'Соусы', value: 'Соусы' },
+          ]}
+        />
+      </div>
       {isLoading && <Loader />}
 
       {!!articles && !isLoading && <ArticleList articles={articles} />}

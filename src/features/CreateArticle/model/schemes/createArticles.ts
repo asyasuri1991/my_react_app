@@ -28,6 +28,9 @@ export type CreateArticleParams = CreateArticleForm & {
   likes: number;
   comments: number;
   bookmarks: number;
+  fullName: string;
+  email: string;
+  avatar: string;
 };
 
 export const сreateArticleFormValidationScheme = object().shape({
@@ -36,10 +39,10 @@ export const сreateArticleFormValidationScheme = object().shape({
     .max(40, 'Слишком многословно')
     .required('Заголовок обязательный')
     .default(''),
-    cal: number().required('Количество порций нужно указать').default(1),
-    protein:  number().required('Количество порций нужно указать').default(1),
-    fat:  number().required('Количество порций нужно указать').default(1),
-    carb: number().required('Количество порций нужно указать').default(1),
+  cal: number().required('Количество порций нужно указать').default(1),
+  protein: number().required('Количество порций нужно указать').default(1),
+  fat: number().required('Количество порций нужно указать').default(1),
+  carb: number().required('Количество порций нужно указать').default(1),
   preparation: string().required('Ингридиенты обязательны').default(''),
   cooking: string().required('Ингридиенты обязательны').default(''),
   all: string().required('Ингридиенты обязательны').default(''),

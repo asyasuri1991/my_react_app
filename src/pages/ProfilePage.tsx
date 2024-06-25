@@ -1,70 +1,47 @@
-import { ArticleView } from 'features/Article/ui/Article';
+import { ArticleList } from 'features/Articles/ui/ArticleList';
 import { UserProfile } from 'features/ProfilePage';
+import { SwipeGallery } from 'features/ProfilePage/ui/SwipeGallery';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from 'shared/components/loader';
 import { Article } from 'shared/types/article';
-import { get } from 'transport';
+import { UserInfo } from 'store/userData/index';
 
 export const ProfilePage = () => {
   const { userId } = useParams();
 
-  const [articles, setArticles] = useState<Article[] | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(null);
+
+  const [article, setArticle] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
+    fetch(`https://ef94cb56b136da80.mokky.dev/articles/${userId}`)
+      .then(res => res.json())
+      .then((userData: UserInfo) => {
+        setUser(userData);
+        console.log(userData);
 
-    get<Article[]>(`/articles?${userId}`)
-      
-      .then(({data}) => {
-        setArticles(data);
-        console.log(data);
+
+        fetch(`https://ef94cb56b136da80.mokky.dev/articles?userId=${userId}`)
+          .then(res => res.json())
+          .then((articlesData: Article[]) => {
+            setArticle(articlesData);
+          })
+          .catch(console.error)
+          .finally(() => setIsLoading(false));
       })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      .catch(console.error);
   }, [userId]);
 
-  if (!articles || isLoading) return <Loader />;
+  if (!user || isLoading) return <Loader />;
 
   return (
-    <div>
-      <h2>Hello, world</h2>
-
-<UserProfile postData={{
-        id: 0,
-        section: '',
-        date: '',
-        title: '',
-        coverImage: '',
-        views: 0,
-        likes: 0,
-        comments: 0,
-        bookmarks: 0,
-        content: '',
-        ingredients: [],
-        description: [],
-        userId: 0,
-        user: {
-          fullName: '',
-          email: '',
-          id: 0,
-          avatar: ''
-        },
-        time: {
-          preparation: '',
-          cooking: '',
-          all: ''
-        },
-        nutrients: {
-          cal: 0,
-          protein: 0,
-          fat: 0,
-          carb: 0
-        },
-        portion: 0
-      }} />
+    <div>      
+      <UserProfile postData={user} />
+      <SwipeGallery images={article}/>
     </div>
   );
 };

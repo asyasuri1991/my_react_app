@@ -3,6 +3,7 @@ import s from './post.module.css';
 import type { Article as ArticleType } from '../../../../shared/types/article';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
+import AvatarIcon from 'assets/icons/Userlcon.png';
 
 type ArticleProps = {
   article: ArticleType;
@@ -11,6 +12,7 @@ type ArticleProps = {
 export const ArticleView = ({ article }: ArticleProps) => {
   const ingredientsList = article.ingredients;
   const descriptionList = article.description;
+  const avatar = article.user.avatar;
 
   return (
     <div className={s.container}>
@@ -42,6 +44,11 @@ export const ArticleView = ({ article }: ArticleProps) => {
           <div className={s.postCardBox}>
             <div className={s.postCardRow}>
               <div className={s.postCardAuthor}>
+              {/* {avatar ? (
+                <img className={s.avatar} src={article.user.avatar} alt="avatar" />
+              ) : (
+                <img className={s.avatar} src={AvatarIcon} alt="avatar" />
+              )}  */}
                 <img className={s.avatar} src={article.user.avatar} />
                 <span className={s.postCardText}>
                   Автор: <Link to={`${ROUTES.PROFILE}/${article.userId}`}>{article.user.fullName}</Link>

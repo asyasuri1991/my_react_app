@@ -1,8 +1,9 @@
 .footerContainer {
-  margin-top: 24px;
+  margin-top: 40px;
   padding: 24px 0px;
   background-color: var(--color-bg);
   bottom: 0;
+  width: 100%;
 }
 
 .footerContent {
