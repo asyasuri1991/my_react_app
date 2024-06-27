@@ -2,7 +2,7 @@ import cl from 'classnames';
 
 import { IconName, ComponentProps } from '../types';
 
-import s from './icon.module.css';
+import './icon.css';
 
 interface IconProps extends ComponentProps {
   name: IconName;

@@ -4,7 +4,7 @@ export interface UserProps {
   map(arg0: (user: any) => void): import('react').ReactNode;
   id: number;
   role: string;
-  fullName: string;
+  name: string;
   email: string;
   password: string;
   avatar: string;

@@ -27,7 +27,7 @@ export const PostCard = (props: PostCardProps) => {
 
       <div className={s.postCardBottom}>
         <div className={s.postCardDate}>{postData.date}</div>
-        <div className={s.postCardViews}>{postData.views}</div>
+        <div className={s.postCardViews}><StatsButtons views={postData.views} likes={postData.likes} /></div>
       </div>
       {/* <div className={s.postCardStatsContainer}>
           <StatsButtons likes={postData.likes} />

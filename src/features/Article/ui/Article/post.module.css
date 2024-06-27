@@ -1,12 +1,6 @@
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-}
 
 .postCard {
   border-radius: 0 0 8px 8px;
-  margin: 10px;
-  padding: 20px;
 
   & a {
     color: var(--color-black);
@@ -219,4 +213,32 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 26px;
+}
+
+
+@media (max-width: 768px) {
+  .postCardInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .postCardRow {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .postCardTimeContainer {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+}
+
+@media (max-width: 576px) {
+  .postCardIngredientsList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
 }

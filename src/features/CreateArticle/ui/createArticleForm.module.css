@@ -93,7 +93,6 @@
 }
 
 .headerSubscribe {
-    margin-left: 10px;
     border: none;
     outline: none;
     background-color: var(--color-brand);
@@ -105,4 +104,5 @@
     cursor: pointer;
     text-decoration: none;
     color: var(--color-grey);
+    white-space: nowrap;
 }

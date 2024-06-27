@@ -3,7 +3,7 @@ import { STORAGE_KEYS, getStorageItem } from '../../utils/storage';
 import { postAuthData } from './effects';
 
 export interface UserInfo {
-  fullName: string;
+  name: string;
   email: string;
   avatar: string;
   token: string;
@@ -44,7 +44,7 @@ export const userDataSlice = createSlice({
     getUserAvatar: state => state.user.avatar,
     getUserId: state => state.user.id,
     getIsAuth: state => state.isAuth,
-    getName: state => state.user.fullName,
+    getName: state => state.user.name,
   },
   extraReducers: builder => {
     builder

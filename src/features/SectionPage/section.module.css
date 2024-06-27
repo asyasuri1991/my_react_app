@@ -12,3 +12,8 @@
   text-decoration: none;
   color: var(--color-grey);
 }
+
+.container {
+  max-width: 1140px;
+  margin:0 auto;
+}

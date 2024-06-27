@@ -1,36 +1,29 @@
-import { number, object, string } from 'yup';
+import { number, object, string, array } from 'yup';
 
 export type CreateArticleForm = {
   title: string;
-  description: string;
+  description: string[];
   coverImage: string;
   content: string;
   section: string;
-  ingredients: string;
+  ingredients: string[];
   portion: number;
-  time: {
-    preparation: string;
-    cooking: string;
-    all: string;
-  };
-  nutrients: {
-    cal: number;
-    protein: number;
-    fat: number;
-    carb: number;
-  };
+  preparation_time: string;
+  cooking_time: string;
+  all_time: string;
+  cal: number;
+  protein: number;
+  fat: number;
+  carb: number;
 };
 
 export type CreateArticleParams = CreateArticleForm & {
-  userId: number;
+  user_id: number;
   date: string;
   views: number;
   likes: number;
   comments: number;
   bookmarks: number;
-  fullName: string;
-  email: string;
-  avatar: string;
 };
 
 export const сreateArticleFormValidationScheme = object().shape({
@@ -43,12 +36,18 @@ export const сreateArticleFormValidationScheme = object().shape({
   protein: number().required('Количество порций нужно указать').default(1),
   fat: number().required('Количество порций нужно указать').default(1),
   carb: number().required('Количество порций нужно указать').default(1),
-  preparation: string().required('Ингридиенты обязательны').default(''),
-  cooking: string().required('Ингридиенты обязательны').default(''),
-  all: string().required('Ингридиенты обязательны').default(''),
+  preparation_time: string().required('Ингридиенты обязательны').default(''),
+  cooking_time: string().required('Ингридиенты обязательны').default(''),
+  all_time: string().required('Ингридиенты обязательны').default(''),
   portion: number().required('Количество порций нужно указать').default(1),
-  ingredients: string().required('Ингридиенты обязательны').default(''),
-  description: string().required('Описание обязательно').default(''),
+  ingredients: array()
+  .of(string())
+  // // .json()
+  // .isValid(),
+  .min(1, 'Вы указали все ингридиенты?')
+  .required('Ингридиенты обязательны')
+  .ensure().cast(null),
+  description: string().required('Описание обязательно').ensure(),
   coverImage: string().required('Обложка обязательна').default(''),
   content: string().required('Содержимое обязательно').default(''),
   section: string().default('Завтраки'),

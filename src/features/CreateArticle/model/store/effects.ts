@@ -7,18 +7,14 @@ import { CreateArticleForm } from '../schemes/createArticles';
 export const createArticle = createAsyncThunk('article/createArticle', async (payload: CreateArticleForm, thunkApi) => {
   const state = thunkApi.getState() as RootState;
 
-  const userId = state.userData.user.id;
-  const fullName = state.userData.user.fullName;
-  const avatar = state.userData.user.avatar;
+  const user_id = state.userData.user.id;
 
-  if (!userId) {
+  if (!user_id) {
     throw new Error('User is not authorized');
   }
 
   const body = {
-    userId,
-    fullName,
-    avatar,
+    user_id,
     date: new Date().toISOString(),
     views: 0,
     likes: 0,

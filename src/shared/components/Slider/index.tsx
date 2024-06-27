@@ -3,6 +3,7 @@ import s from './slider.module.css';
 import cn from 'classnames';
 import { useState } from 'react';
 import Arrow from 'assets/icons/Right.svg';
+import { Container } from '@mui/material';
 
 const FADE_DURATION = 300;
 
@@ -22,23 +23,26 @@ export const Slider = ({ slides }: SliderProps) => {
   };
 
   return (
-    <div className={s.slider}>
-      <div className={cn(s.slide, s[fadeState])} style={{transitionDuration: `${FADE_DURATION}ms`}}>
-        <div className={s.left}>
-          <div className={s.text}>{slides[slide].text}</div>
+    <Container>
+      <div className={s.slider}>
+        <div className={cn(s.slide, s[fadeState])} style={{ transitionDuration: `${FADE_DURATION}ms` }}>
+          <div className={s.left}>
+            <div className={s.text}>{slides[slide].text}</div>
+          </div>
+          <div className={s.right} style={{ backgroundImage: `url(${slides[slide].image})` }}></div>
         </div>
-        <div className={s.right} style={{ backgroundImage: `url(${slides[slide].image})` }}></div>
+        {slide > 0 && (
+          <button className={cn(s.arrow, s.arrowLeft)} onClick={() => handleClick(-1)}>
+            <Arrow />
+          </button>
+        )}
+        {slide < slides.length - 1 && (
+          <button className={cn(s.arrow, s.arrowRight)} onClick={() => handleClick(1)}>
+            <Arrow />
+          </button>
+        )}
+        
       </div>
-      {slide > 0 && (
-        <button className={cn(s.arrow, s.arrowLeft)} onClick={() => handleClick(-1)}>
-          <Arrow />
-        </button>
-      )}
-      {slide < slides.length - 1 && (
-        <button className={cn(s.arrow, s.arrowRight)} onClick={() => handleClick(1)}>
-          <Arrow />
-        </button>
-      )}
-    </div>
+    </Container>
   );
 };

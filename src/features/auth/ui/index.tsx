@@ -28,7 +28,7 @@ interface SignModalProps {
 interface DataItem {
   id: number;
   role?: string;
-  fullName: string;
+  name: string;
   email: string;
   password: string;
   avatar?: string;
@@ -66,7 +66,7 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
   });
 
   const onSubmit = async (dataForm: DataItem) => {
-    if (dataForm.fullName) {
+    if (dataForm.name) {
       try {
         const { data } = await baseInstance.post('/register', dataForm);
 
@@ -189,18 +189,18 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
                     autoComplete="given-name"
                     required
                     fullWidth
-                    id="fullName"
+                    id="name"
                     label="Логин"
                     autoFocus
-                    {...register('fullName', {
+                    {...register('name', {
                       required: 'Логин обязательный параметр',
                       minLength: {
                         value: 2,
                         message: 'Минимальная длина 1 символ',
                       },
                     })}
-                    error={!!errors.fullName}
-                    helperText={errors.fullName ? errors.fullName.message : ''}
+                    error={!!errors.name}
+                    helperText={errors.name ? errors.name.message : ''}
                   />
                 </Grid>
                 <Grid item xs={12}>

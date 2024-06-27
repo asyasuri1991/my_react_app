@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { BaseContainer } from './base-container';
+import { BaseContainer } from './base-container/';
 import { ContentWrapper } from './content-wrapper';
 import { Header } from './header';
 import { MainContent } from './main-content';

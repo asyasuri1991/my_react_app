@@ -7,7 +7,7 @@ export type AuthResponse = {
   data: {
     id: number;
     role: string;
-    fullName: string;
+    name: string;
     avatar: string;
     email: string;
   };

@@ -10,16 +10,23 @@ import { Container } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Select from 'shared/components/Select';
 import { Article } from 'shared/types/article';
-import { get } from 'transport';
+import { baseInstance, get } from 'transport';
 import { SelectAll } from '@mui/icons-material';
+import { useDebounce } from 'hooks/useDebounce';
+import { useAppDispatch } from 'store';
+import { setNewArticles } from 'store/articleData';
 
 export const MainPage = () => {
+  const dispatch = useAppDispatch();
+
   const [articles, setArticles] = useState<Article[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [params, setParams] = useSearchParams();
   const section = params.get('section') || 'all';
+
+  // const debouncedValue = useDebounce(search, 300);
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,6 +50,21 @@ export const MainPage = () => {
 
   // if (isLoading) return <Loader />;
   // if (!articles) return <div>There are not any articles</div>;
+
+  // useEffect(() => {
+  //   const searchArticles = async () => {
+  //     try {
+  //       const { data } = await baseInstance.get(
+  //        debouncedValue ? `/articles?title=*${debouncedValue}*` : `/articles`
+  //       );
+  //       dispatch(setNewArticles(data));
+  //     } catch (e) {
+  //       console.error("Error while searching");
+  //     }
+  //   };
+
+  //   void searchArticles();
+  // }, [debouncedValue]);
 
   return (
     <Container>

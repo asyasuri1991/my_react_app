@@ -1,6 +1,5 @@
 import Logo from 'assets/images/logo.png';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { Menu } from 'shared/components/Menu';
 import s from './header.module.css';
 import { ROUTES } from 'router/routes';
 import { Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ import { baseInstance } from 'transport';
 import { AppBar, Box, Container, InputAdornment, TextField, Toolbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HTMLInputElement>) => void }) => {
+export const Header = () => {
   const dispatch = useAppDispatch();
   const [visibleModal, setVisibleModal] = useState(false);
 
@@ -76,7 +75,8 @@ export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HT
             fullWidth
             placeholder="Что бы Вы хотели приготовить?"
             className={s.searchInput}
-            onChange={onSearchChange}
+            // onChange={event => setSearch(event.target.value)}
+            // value={search}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -85,35 +85,34 @@ export const Header = ({ onSearchChange }: { onSearchChange?: (e: ChangeEvent<HT
               ),
             }}
           />
-          {storedToken ? (
-            <>
-              {avatar ? (
-                <img className={s.avatar} src={avatar} alt="avatar" />
-              ) : (
-                <img className={s.avatar} src={AvatarIcon} alt="avatar" />
-              )}
+          <div className={s.headerAccount}>
+            {storedToken ? (
+              <>
+                {avatar ? (
+                  <img className={s.avatar} src={avatar} alt="avatar" />
+                ) : (
+                  <img className={s.avatar} src={AvatarIcon} alt="avatar" />
+                )}
 
-              <button className={s.headerLogIn} onClick={handleOpen}>
-                Выйти
+                <button className={s.headerLogIn} onClick={handleOpen}>
+                  Выйти
+                </button>
+                <Dialog open={openModal} onClose={handleClose}>
+                  <DialogTitle>Вы точно хотите выйти?</DialogTitle>
+                  <DialogActions>
+                    <Button onClick={handleClose}>Нет</Button>
+                    <Button onClick={logoutHandler}>Да</Button>
+                  </DialogActions>
+                </Dialog>
+              </>
+            ) : (
+              <button className={s.headerLogIn} onClick={() => setVisibleModal(true)}>
+                Войти
               </button>
-            <Dialog
-              open={openModal}
-              onClose={handleClose}
-            >
-              <DialogTitle>Вы точно хотите выйти?</DialogTitle>
-              <DialogActions>
-                <Button onClick={handleClose}>Нет</Button>
-                <Button onClick={logoutHandler}>Да</Button>
-              </DialogActions>
-            </Dialog>
-          </>
-        ) : (
-          <button className={s.headerLogIn} onClick={() => setVisibleModal(true)}>
-            Войти
-          </button>
-        )}
+            )}
 
-          <CreateArticleForm/> 
+            <CreateArticleForm />
+          </div>
         </Toolbar>
       </Container>
     </AppBar>

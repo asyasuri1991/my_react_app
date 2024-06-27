@@ -11,23 +11,19 @@ export type Article = {
   content: string;
   ingredients: string[];
   description: string[];
-  userId: number;
   user: {
-    fullName: string;
+    name: string;
     email: string;
     id: number;
     avatar: string;
   };
-  time: {
-    preparation: string;
-    cooking: string;
-    all: string;
-  };
-  nutrients: {
-    cal: number;
-    protein: number;
-    fat: number;
-    carb: number;
-  };
+  user_id: number;
+  preparation_time: string;
+  cooking_time: string;
+  all_time: string;
+  cal: number;
+  protein: number;
+  fat: number;
+  carb: number;
   portion: number;
 };

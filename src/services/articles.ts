@@ -35,7 +35,7 @@ export const articlesApi = createApi({
       query: page => `articles?sortBy=id&page=${page}&limit=6`,
       providesTags: ['Articles'],
     }),
-    createArticle: builder.mutation<unknown, CreateArticleForm & { userId: number }>({
+    createArticle: builder.mutation<unknown, CreateArticleForm & { user_id: number }>({
       query: args => ({
         url: '/articles?_relations=users',
         method: 'POST',

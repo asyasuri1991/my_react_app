@@ -17,9 +17,6 @@ export const UserProfile = (props: PostCardProps) => {
     <>
       <div className={s.container}>
         <div className={s.profileBox}>
-          <div className={s.profileImage}>
-            <img src={Image} alt="cook" />
-          </div>
           <div className={s.profileInfoBox}>
             <h2 className={s.profileTitle}>Автор рецептов</h2>
             {/* {avatar ? (
@@ -28,7 +25,7 @@ export const UserProfile = (props: PostCardProps) => {
                 <img className={s.profileAvatar} src={AvatarIcon} alt="avatar" />
               )}  */}
             <img src={props.postData.user.avatar} alt="avatar" className={s.profileAvatar} />
-            <span className={s.profileText}>{props.postData.user.fullName}</span>
+            <span className={s.profileText}>{props.postData.user.name}</span>
           </div>
         </div>
         <div className={s.profileBox}>

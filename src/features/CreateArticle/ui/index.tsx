@@ -69,19 +69,7 @@ export const CreateArticleForm = () => {
             initialValues={сreateArticleFormValidationScheme.getDefault()}
             onSubmit={val => {
               createArticle({
-                ...val, userId: userId,
-                time: {
-                  preparation: '',
-                  cooking: '',
-                  all: ''
-                },
-                nutrients: {
-                  cal: 0,
-                  protein: 0,
-                  fat: 0,
-                  carb: 0
-                }
-              });
+                ...val, user_id: userId});
 
               // dispatch(createArticle(val))
               //   .unwrap()
@@ -146,29 +134,29 @@ export const CreateArticleForm = () => {
                 />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Подготовка" name="preparation" placeholder="Время на подготовку" />
+                <FormikInput label="Подготовка" name="preparation_time" placeholder="Время на подготовку" />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Готовка" name="cooking" placeholder="Время приготовления" />
+                <FormikInput label="Готовка" name="cooking_time" placeholder="Время приготовления" />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Общее время" name="all" placeholder="Общее время" />
+                <FormikInput label="Общее время" name="all_time" placeholder="Общее время" />
               </div>
               <div className={s.formField}>
                 <FormikInput
                   label="Калории"
-                  name="nutrients.cal"
+                  name="cal"
                   placeholder="Сколько калорий в 100 гр Вашего блюда?"
                 />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Белки" name="nutrients.protein" />
+                <FormikInput label="Белки" name="protein" />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Жиры" name="nutrients.fat" />
+                <FormikInput label="Жиры" name="fat" />
               </div>
               <div className={s.formField}>
-                <FormikInput label="Углеводы" name="nutrients.carb" />
+                <FormikInput label="Углеводы" name="carb" />
               </div>
               <button type="submit" className={s.submitButton} disabled={isLoading}>
                 Добавить

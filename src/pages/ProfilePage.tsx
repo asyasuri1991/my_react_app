@@ -6,9 +6,10 @@ import { useParams } from 'react-router-dom';
 import Loader from 'shared/components/loader';
 import { Article } from 'shared/types/article';
 import { UserInfo } from 'store/userData/index';
+import { Container } from '@mui/material';
 
 export const ProfilePage = () => {
-  const { userId } = useParams();
+  const { user_id } = useParams();
 
   const [user, setUser] = useState<UserInfo | null>(null);
 
@@ -18,14 +19,14 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`https://ef94cb56b136da80.mokky.dev/articles/${userId}`)
+    fetch(`https://ef94cb56b136da80.mokky.dev/articles/${user_id}`)
       .then(res => res.json())
       .then((userData: UserInfo) => {
         setUser(userData);
         console.log(userData);
 
 
-        fetch(`https://ef94cb56b136da80.mokky.dev/articles?userId=${userId}`)
+        fetch(`https://ef94cb56b136da80.mokky.dev/articles?user_id=${user_id}`)
           .then(res => res.json())
           .then((articlesData: Article[]) => {
             setArticle(articlesData);
@@ -34,14 +35,14 @@ export const ProfilePage = () => {
           .finally(() => setIsLoading(false));
       })
       .catch(console.error);
-  }, [userId]);
+  }, [user_id]);
 
   if (!user || isLoading) return <Loader />;
 
   return (
-    <div>      
+    <Container>      
       <UserProfile postData={user} />
       <SwipeGallery images={article}/>
-    </div>
+    </Container>
   );
 };
