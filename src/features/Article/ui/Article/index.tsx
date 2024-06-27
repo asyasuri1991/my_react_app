@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
 import AvatarIcon from 'assets/icons/Userlcon.png';
 import { Container } from '@mui/material';
+import { useEffect } from 'react';
 
 type ArticleProps = {
   article: ArticleType;
@@ -13,7 +14,11 @@ type ArticleProps = {
 export const ArticleView = ({ article }: ArticleProps) => {
   const ingredientsList = article.ingredients;
   const descriptionList = article.description;
-  const avatar = article.user.avatar;
+  // const avatar = article.user.avatar;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container>
@@ -44,99 +49,101 @@ export const ArticleView = ({ article }: ArticleProps) => {
           </div>
           <div className={s.postCardBox}>
             <div className={s.postCardRow}>
-              <div className={s.postCardAuthor}>
+             <div className={s.postCardAuthor}>
                 <img className={s.avatar} src={article.user.avatar} />
                 <span className={s.postCardText}>
                   Автор: <Link to={`${ROUTES.PROFILE}/${article.user_id}`}>{article.user.name}</Link>
                 </span>
-              </div>
+              </div> 
               <span className={s.postCardText}>{article.date}</span>
             </div>
             <div className={s.postCardBlock}>
               <h2 className={s.postCardTitle}>{article.title}</h2>
               <p className={s.postCardText}>{article.content}</p>
+              <div className={s.postCardStatsContainer}>
+            <StatsButtons likes={article.likes} views={article.views} />
+          </div>
             </div>
-            <div className={s.postCardStatsContainer}>
-              <StatsButtons likes={article.likes} views={article.views} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={s.postCardBox}>
-        <div className={s.postCardTimeContainer}>
-          <div className={s.postCardTimeBox}>
-            <span className={s.postCardTimeSubitle}>Подготовка</span>
-            <span className={s.postCardText}>{article.preparation_time}</span>
-          </div>
-          <div className={s.postCardTimeBox}>
-            <span className={s.postCardTimeSubitle}>Готовка</span>
-            <span className={s.postCardText}>{article.cooking_time}</span>
-          </div>
-          <div className={s.postCardTimeBox}>
-            <span className={s.postCardTimeSubitle}>Общее время</span>
-            <span className={s.postCardText}>{article.all_time}</span>
-          </div>
-          <div className={s.postCardTimeBox}>
-            <span className={s.postCardTimeSubitle}>Число порций</span>
-            <span className={s.postCardText}>{article.portion}</span>
-          </div>
-        </div>
-        <div className={s.postCardContent}>
-          <h3 className={s.postCardSubtitle}>Ингридиенты</h3>
-          <div className={s.postCardIngredients}>
-            <ul className={s.postCardIngredientsList}>
-              {ingredientsList.map((ingredient: string, index: number) => (
-                <li key={index} className={s.postCardIngredientsListItem}>
-                  {ingredient}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <h3 className={s.postCardSubtitle}>Приготовление</h3>
-          <div className={s.postCardDescription}>
-            <ul className={s.postCardDescriptionList}>
-              {descriptionList.map((description: string, index: number) => (
-                <li key={index} className={s.postCardDescriptionListItem}>
-                  {description}
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
-        <div className={s.postCardNutrientsContainer}>
-          <table className={s.postCardNutrientsTable}>
-            <caption className={s.postCardNutrientsTitle}>
-              Пищевая ценность блюда {article.title} (на 100 грамм)
-            </caption>
-            <thead className={s.postCardNutrientsTableHead}>
-              <tr>
-                <th scope="col" className={s.postCardNutrientsTableItem}>
-                  Калории
-                </th>
-                <th scope="col" className={s.postCardNutrientsTableItem}>
-                  Белки
-                </th>
-                <th scope="col" className={s.postCardNutrientsTableItem}>
-                  Жиры
-                </th>
-                <th scope="col" className={s.postCardNutrientsTableItem}>
-                  Углеводы
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row" className={s.postCardNutrientsTableItem}>
-                  {article.cal} ккал.
-                </th>
-                <td className={s.postCardNutrientsTableItem}>{article.protein} гр.</td>
-                <td className={s.postCardNutrientsTableItem}>{article.fat} гр.</td>
-                <td className={s.postCardNutrientsTableItem}>{article.carb} гр.</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className={s.postCardBox}>
+          <div className={s.postCardTimeContainer}>
+            <div className={s.postCardTimeBox}>
+              <span className={s.postCardTimeSubitle}>Подготовка</span>
+              <span className={s.postCardText}>{article.preparation_time}</span>
+            </div>
+            <div className={s.postCardTimeBox}>
+              <span className={s.postCardTimeSubitle}>Готовка</span>
+              <span className={s.postCardText}>{article.cooking_time}</span>
+            </div>
+            <div className={s.postCardTimeBox}>
+              <span className={s.postCardTimeSubitle}>Общее время</span>
+              <span className={s.postCardText}>{article.all_time}</span>
+            </div>
+            <div className={s.postCardTimeBox}>
+              <span className={s.postCardTimeSubitle}>Число порций</span>
+              <span className={s.postCardText}>{article.portion}</span>
+            </div>
+          </div>
+          <div className={s.postCardContent}>
+            <h3 className={s.postCardSubtitle}>Ингридиенты</h3>
+            <div className={s.postCardIngredients}>
+              <ul className={s.postCardIngredientsList}>
+                {ingredientsList.map((ingredient: string, index: number) => (
+                  <li key={index} className={s.postCardIngredientsListItem}>
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <h3 className={s.postCardSubtitle}>Приготовление</h3>
+            <div className={s.postCardDescription}>
+              <ul className={s.postCardDescriptionList}>
+                {descriptionList.map((description: string, index: number) => (
+                  <li key={index} className={s.postCardDescriptionListItem}>
+                    {description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className={s.postCardNutrientsContainer}>
+            <table className={s.postCardNutrientsTable}>
+              <caption className={s.postCardNutrientsTitle}>
+                Пищевая ценность блюда {article.title} (на 100 грамм)
+              </caption>
+              <thead className={s.postCardNutrientsTableHead}>
+                <tr>
+                  <th scope="col" className={s.postCardNutrientsTableItem}>
+                    Калории
+                  </th>
+                  <th scope="col" className={s.postCardNutrientsTableItem}>
+                    Белки
+                  </th>
+                  <th scope="col" className={s.postCardNutrientsTableItem}>
+                    Жиры
+                  </th>
+                  <th scope="col" className={s.postCardNutrientsTableItem}>
+                    Углеводы
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" className={s.postCardNutrientsTableItem}>
+                    {article.cal} ккал.
+                  </th>
+                  <td className={s.postCardNutrientsTableItem}>{article.protein} гр.</td>
+                  <td className={s.postCardNutrientsTableItem}>{article.fat} гр.</td>
+                  <td className={s.postCardNutrientsTableItem}>{article.carb} гр.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
         </div>
 
         <div>

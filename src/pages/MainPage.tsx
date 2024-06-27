@@ -6,28 +6,21 @@ import Loader from 'shared/components/loader';
 import { useGetArticlesQuery, useLazyGetArticlesQuery } from '../services/articles';
 import s from 'features/mainPage/styles.module.css';
 import { MainBanner } from 'shared/components/MainBanner';
-import { Container } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Select from 'shared/components/Select';
 import { Article } from 'shared/types/article';
-import { baseInstance, get } from 'transport';
-import { SelectAll } from '@mui/icons-material';
-import { useDebounce } from 'hooks/useDebounce';
-import { useAppDispatch } from 'store';
-import { setNewArticles } from 'store/articleData';
+import { get } from 'transport';
+import { Container, InputAdornment, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const MainPage = () => {
-  const dispatch = useAppDispatch();
-
   const [articles, setArticles] = useState<Article[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [params, setParams] = useSearchParams();
   const section = params.get('section') || 'all';
-
-  // const debouncedValue = useDebounce(search, 300);
-
+  const [searchValue, setSearchValue] = useState('');
   useEffect(() => {
     setIsLoading(true);
 
@@ -39,6 +32,16 @@ export const MainPage = () => {
       .finally(() => setIsLoading(false));
   }, [section]);
 
+  useEffect(() => {
+    setIsLoading(true);
+
+    get<Article[]>(`/articles?title=*${searchValue}`)
+      .then(({ data }) => {
+        setArticles(data);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, [searchValue]);
   // const page = Number(params.get('page') || 1);
 
   // const setPage = (page: number) => {
@@ -50,26 +53,26 @@ export const MainPage = () => {
 
   // if (isLoading) return <Loader />;
   // if (!articles) return <div>There are not any articles</div>;
-
-  // useEffect(() => {
-  //   const searchArticles = async () => {
-  //     try {
-  //       const { data } = await baseInstance.get(
-  //        debouncedValue ? `/articles?title=*${debouncedValue}*` : `/articles`
-  //       );
-  //       dispatch(setNewArticles(data));
-  //     } catch (e) {
-  //       console.error("Error while searching");
-  //     }
-  //   };
-
-  //   void searchArticles();
-  // }, [debouncedValue]);
+  // if (!articles.includes(searchValue)) return <div>Таких рецетов еще нет! Будьте первым, кто добавит его.</div>
 
   return (
     <Container>
       <MainBanner />
       <h2 className={s.heading}>Вся лента</h2>
+      <TextField
+        sx={{ mb: 2 }}
+        fullWidth
+        placeholder="Что бы Вы хотели приготовить?"
+        className={s.searchInput}
+        onChange={e => setSearchValue(e.currentTarget.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
       <div className={s.pageSelect}>
         <Select
           value={section}
@@ -89,8 +92,8 @@ export const MainPage = () => {
         />
       </div>
       {isLoading && <Loader />}
-
       {!!articles && !isLoading && <ArticleList articles={articles} />}
+
       {/* <div className={s.pagination}>
         <button
           className={s.paginationBtn}

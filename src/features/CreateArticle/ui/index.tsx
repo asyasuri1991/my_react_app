@@ -12,23 +12,7 @@ import { useSelector } from 'react-redux';
 import { ROUTES } from '../../../router/routes';
 import { useCreateArticleMutation } from '../../../services/articles';
 import { getUserId } from '../../../store/userData';
-
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
-// const style = {
-//   position: 'absolute',
-//   top: '50%',
-//   left: '50%',
-//   transform: 'translate(-50%, -50%)',
-//   width: 800,
-//   bgcolor: 'background.paper',
-//   border: '2px solid #000',
-//   boxShadow: 24,
-//   p: 4,
-// };
 
 const options = [
   { label: 'Завтраки', value: 'Завтраки' },
@@ -69,7 +53,9 @@ export const CreateArticleForm = () => {
             initialValues={сreateArticleFormValidationScheme.getDefault()}
             onSubmit={val => {
               createArticle({
-                ...val, user_id: userId});
+                ...val,
+                user_id: userId,
+              });
 
               // dispatch(createArticle(val))
               //   .unwrap()
@@ -143,11 +129,7 @@ export const CreateArticleForm = () => {
                 <FormikInput label="Общее время" name="all_time" placeholder="Общее время" />
               </div>
               <div className={s.formField}>
-                <FormikInput
-                  label="Калории"
-                  name="cal"
-                  placeholder="Сколько калорий в 100 гр Вашего блюда?"
-                />
+                <FormikInput label="Калории" name="cal" placeholder="Сколько калорий в 100 гр Вашего блюда?" />
               </div>
               <div className={s.formField}>
                 <FormikInput label="Белки" name="protein" />

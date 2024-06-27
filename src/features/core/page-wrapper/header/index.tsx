@@ -1,8 +1,9 @@
 import Logo from 'assets/images/logo.png';
 import { ChangeEvent, useState, useEffect } from 'react';
+import { Menu } from 'shared/components/Menu';
 import s from './header.module.css';
 import { ROUTES } from 'router/routes';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fetchData, UserProps } from 'services/users';
 import { CreateArticleForm } from 'features/CreateArticle/ui';
 import { SignForm } from 'features/auth/ui';
@@ -16,14 +17,15 @@ import { clearUserData, getIsAuth, getName, getToken, getUserAvatar, setIsAuth, 
 import { STORAGE_KEYS, clearStorageItem } from 'utils/storage';
 import { baseInstance } from 'transport';
 import { AppBar, Box, Container, InputAdornment, TextField, Toolbar } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Article } from 'shared/types/article';
+import Loader from 'shared/components/loader';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
   const [visibleModal, setVisibleModal] = useState(false);
-
   const avatar = useAppSelector(getUserAvatar);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [userId, setUserId] = useState(null);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -49,11 +51,11 @@ export const Header = () => {
               Authorization: `Bearer ${storedToken}`,
             },
           });
+          setUserId(data.id);
           dispatch(setUserInfo(data));
           dispatch(setIsAuth(true));
         } catch (e) {
           console.error(e);
-          dispatch(setIsAuth(false));
         }
       } else {
         dispatch(setIsAuth(false));
@@ -71,29 +73,16 @@ export const Header = () => {
           <Link to={ROUTES.ROOT}>
             <Box component="img" src={Logo} alt="logo" sx={{ width: { sm: 226, xs: 130 }, objectFit: 'cover' }} />
           </Link>
-          <TextField
-            fullWidth
-            placeholder="Что бы Вы хотели приготовить?"
-            className={s.searchInput}
-            // onChange={event => setSearch(event.target.value)}
-            // value={search}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
           <div className={s.headerAccount}>
             {storedToken ? (
               <>
-                {avatar ? (
-                  <img className={s.avatar} src={avatar} alt="avatar" />
-                ) : (
-                  <img className={s.avatar} src={AvatarIcon} alt="avatar" />
-                )}
-
+                <Link to={`${ROUTES.PROFILE}/${userId}`}>
+                  {avatar ? (
+                    <img className={s.avatar} src={avatar} alt="avatar" />
+                  ) : (
+                    <img className={s.avatar} src={AvatarIcon} alt="avatar" />
+                  )}
+                </Link>
                 <button className={s.headerLogIn} onClick={handleOpen}>
                   Выйти
                 </button>
@@ -110,7 +99,6 @@ export const Header = () => {
                 Войти
               </button>
             )}
-
             <CreateArticleForm />
           </div>
         </Toolbar>

@@ -57,13 +57,18 @@ export const SwipeGallery = ({ images }: SwipeGalleryProps) => {
   const isLoaded = (index: number) => activeIndex - 1 === index || activeIndex + 1 === index || activeIndex === index;
 
   return (
-    <div className={s.gallery}>
+    <>
       <div className={s.galleryContainer} ref={containerRef}>
         {images.map((image, index) => (
           <div key={index} className={s.galleryContainerItem}>
             <Link to={`${ROUTES.ARTICLE}/${image.id}`}>
               <div className={s.galleryLink}>
-                <img src={image.coverImage} alt={image.title} loading={isLoaded(index) ? undefined : 'lazy'} className={s.galleryImg}/>
+                <img
+                  src={image.coverImage}
+                  alt={image.title}
+                  loading={isLoaded(index) ? undefined : 'lazy'}
+                  className={s.galleryImg}
+                />
                 <span className={s.galleryText}>{image.title}</span>
               </div>
             </Link>
@@ -79,6 +84,6 @@ export const SwipeGallery = ({ images }: SwipeGalleryProps) => {
           onClick={() => move(increaseIndex(activeIndex, images.length))}
         />
       </div>
-    </div>
+    </>
   );
 };
