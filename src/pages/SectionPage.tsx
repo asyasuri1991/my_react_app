@@ -6,6 +6,7 @@ import { ArticleList } from 'features/Articles/ui/ArticleList';
 import { get } from 'transport';
 import { ROUTES } from 'router/routes';
 import s from 'features/SectionPage/section.module.css';
+import { Container } from '@mui/material';
 
 export const SectionPage = () => {
   const { section } = useParams();
@@ -25,24 +26,14 @@ export const SectionPage = () => {
       .finally(() => setIsLoading(false));
   }, [section]);
 
-  // const showArticles = async () => {
-  //   try {
-  //     const { data } = await baseInstance.get(`/articles?/${section}`);
-  //     setArticles(articles);
-  //   } catch (e) {
-  //     console.error('Error while fetching expenses');
-  //   }
-  // };
-  // showArticles();
-
   if (isLoading) return <Loader />;
   if (!articles) return <div>There are not any articles</div>;
   return (
-    <div>
+    <Container>
       <Link to={ROUTES.ROOT}>
         <button className={s.button}>На главную</button>
       </Link>
       <ArticleList articles={articles} />
-    </div>
+    </Container>
   );
 };

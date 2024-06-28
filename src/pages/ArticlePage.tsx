@@ -18,6 +18,7 @@ export const ArticlePage = () => {
       .then(res => res.json())
       .then((articlesData: Article) => {
         setArticle(articlesData);
+        console.log(articlesData);
       })
       .catch(console.error)
       .finally(() => setIsLoading(false));

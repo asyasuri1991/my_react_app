@@ -3,15 +3,15 @@ import { Slider } from 'shared/components/Slider';
 import image from 'assets/images/author.jpg';
 import { useSearchParams } from 'react-router-dom';
 import Loader from 'shared/components/loader';
-import { useGetArticlesQuery, useLazyGetArticlesQuery } from '../services/articles';
 import s from 'features/mainPage/styles.module.css';
 import { MainBanner } from 'shared/components/MainBanner';
-import { useState, useEffect } from 'react';
-import Select from 'shared/components/Select';
+import { useState, useEffect, SyntheticEvent } from 'react';
 import { Article } from 'shared/types/article';
 import { get } from 'transport';
 import { Container, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 export const MainPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -21,6 +21,7 @@ export const MainPage = () => {
   const [params, setParams] = useSearchParams();
   const section = params.get('section') || 'all';
   const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -42,18 +43,6 @@ export const MainPage = () => {
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [searchValue]);
-  // const page = Number(params.get('page') || 1);
-
-  // const setPage = (page: number) => {
-  //   params.set('page', String(page));
-  //   setParams(params);
-  // };
-
-  // const { data, isLoading, isFetching } = useGetArticlesQuery(page);
-
-  // if (isLoading) return <Loader />;
-  // if (!articles) return <div>There are not any articles</div>;
-  // if (!articles.includes(searchValue)) return <div>Таких рецетов еще нет! Будьте первым, кто добавит его.</div>
 
   return (
     <Container>
@@ -74,44 +63,26 @@ export const MainPage = () => {
         }}
       />
       <div className={s.pageSelect}>
-        <Select
+        <Tabs
           value={section}
-          onChange={e => {
-            params.set('section', e.target.value);
+          onChange={(e: SyntheticEvent, newValue: string) => {
+            params.set('section', newValue);
             setParams(params);
           }}
-          options={[
-            { label: 'Все рецепты', value: 'all' },
-            { label: 'Завтраки', value: 'Завтраки' },
-            { label: 'Салаты', value: 'Салаты' },
-            { label: 'Десерты и выпечка', value: 'Десерты и выпечка' },
-            { label: 'Обеды и ужины', value: 'Обеды и ужины' },
-            { label: 'Закуски', value: 'Закуски' },
-            { label: 'Соусы', value: 'Соусы' },
-          ]}
-        />
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
+        >
+          <Tab label="Все рецепты" value="all" />
+          <Tab label="Завтраки" value="Завтраки" />
+          <Tab label="Десерты и выпечка" value="Десерты и выпечка" />
+          <Tab label="Обеды и ужины" value="Обеды и ужины" />
+          <Tab label="Закуски" value="Закуски" />
+          <Tab label="Соусы" value="Соусы" />
+        </Tabs>
       </div>
       {isLoading && <Loader />}
       {!!articles && !isLoading && <ArticleList articles={articles} />}
-
-      {/* <div className={s.pagination}>
-        <button
-          className={s.paginationBtn}
-          onClick={() => {
-            setPage(page - 1);
-          }}
-          disabled={isFetching || page === 1}
-        >
-          Назад
-        </button>
-        <button
-          className={s.paginationBtn}
-          onClick={() => setPage(page + 1)}
-          disabled={isFetching || data.meta.total_pages === page}
-        >
-          Вперёд
-        </button>
-      </div> */}
       <Slider
         slides={[
           {

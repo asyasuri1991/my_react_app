@@ -2,11 +2,11 @@ import { number, object, string, array } from 'yup';
 
 export type CreateArticleForm = {
   title: string;
-  description: string;
+  description: string[];
   coverImage: string;
   content: string;
   section: string;
-  ingredients: string;
+  ingredients: string[];
   portion: number;
   preparation_time: string;
   cooking_time: string;
@@ -15,7 +15,7 @@ export type CreateArticleForm = {
   protein: number;
   fat: number;
   carb: number;
-};
+}
 
 export type CreateArticleParams = CreateArticleForm & {
   user_id: number;
@@ -40,8 +40,8 @@ export const сreateArticleFormValidationScheme = object().shape({
   cooking_time: string().required('Ингридиенты обязательны').default(''),
   all_time: string().required('Ингридиенты обязательны').default(''),
   portion: number().required('Количество порций нужно указать').default(1),
-  ingredients: string().required('Описание обязательно').default(''),
-  description: string().required('Описание обязательно').default(''),
+  ingredients: array().required('Описание обязательно').ensure(),
+  description: array().required('Описание обязательно').ensure(),
   coverImage: string().required('Обложка обязательна').default(''),
   content: string().required('Содержимое обязательно').default(''),
   section: string().default('Завтраки'),

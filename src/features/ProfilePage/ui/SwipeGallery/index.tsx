@@ -1,13 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-
 import { Button } from '../Button';
 import { Counter } from '../Counter';
-
 import { useUpdateActiveIndex } from './hooks/useUpdateActiveIndex';
 import { useKeysEvents } from './hooks/useKeyEvents';
-
 import s from './gallery.module.css';
-
 import { Article } from 'shared/types/article';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';

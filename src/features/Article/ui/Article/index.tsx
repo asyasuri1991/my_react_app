@@ -3,7 +3,6 @@ import s from './post.module.css';
 import type { Article as ArticleType } from '../../../../shared/types/article';
 import { Link } from 'react-router-dom';
 import { ROUTES } from 'router/routes';
-import AvatarIcon from 'assets/icons/Userlcon.png';
 import { Container } from '@mui/material';
 import { useEffect } from 'react';
 
@@ -14,7 +13,6 @@ type ArticleProps = {
 export const ArticleView = ({ article }: ArticleProps) => {
   const ingredientsList = article.ingredients;
   const descriptionList = article.description;
-  // const avatar = article.user.avatar;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,20 +47,14 @@ export const ArticleView = ({ article }: ArticleProps) => {
           </div>
           <div className={s.postCardBox}>
             <div className={s.postCardRow}>
-             <div className={s.postCardAuthor}>
-                <img className={s.avatar} src={article.user.avatar} />
-                <span className={s.postCardText}>
-                  Автор: <Link to={`${ROUTES.PROFILE}/${article.user_id}`}>{article.user.name}</Link>
-                </span>
-              </div> 
-              <span className={s.postCardText}>{article.date}</span>
+              <span className={s.postCardText}>{article.date}</span>{' '}
+              <div className={s.postCardStatsContainer}>
+                <StatsButtons likes={article.likes} views={article.views} />
+              </div>
             </div>
             <div className={s.postCardBlock}>
               <h2 className={s.postCardTitle}>{article.title}</h2>
               <p className={s.postCardText}>{article.content}</p>
-              <div className={s.postCardStatsContainer}>
-            <StatsButtons likes={article.likes} views={article.views} />
-          </div>
             </div>
           </div>
         </div>
@@ -142,8 +134,6 @@ export const ArticleView = ({ article }: ArticleProps) => {
               </tbody>
             </table>
           </div>
-
-
         </div>
 
         <div>

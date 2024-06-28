@@ -1,7 +1,5 @@
-import type { Article, Article as ArticleType } from '../../shared/types/article';
 import s from './profile.module.css';
 import Image from 'assets/images/cook.jpg';
-import { useAppSelector } from 'store';
 import { UserInfo } from 'store/userData';
 import { useEffect } from 'react';
 
@@ -10,11 +8,11 @@ type PostCardProps = {
 };
 
 export const UserProfile = (props: PostCardProps) => {
-  // const slidesList = props.postData.coverImage;
-  // const avatar = props.postData.user.avatar;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   return (
     <>
       <div className={s.profileBox}>

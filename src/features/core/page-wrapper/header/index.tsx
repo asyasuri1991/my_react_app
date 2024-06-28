@@ -1,10 +1,8 @@
 import Logo from 'assets/images/logo.png';
-import { ChangeEvent, useState, useEffect } from 'react';
-import { Menu } from 'shared/components/Menu';
+import { useState, useEffect } from 'react';
 import s from './header.module.css';
 import { ROUTES } from 'router/routes';
-import { Link, useParams } from 'react-router-dom';
-import { fetchData, UserProps } from 'services/users';
+import { Link } from 'react-router-dom';
 import { CreateArticleForm } from 'features/CreateArticle/ui';
 import { SignForm } from 'features/auth/ui';
 import AvatarIcon from 'assets/icons/user.png';
@@ -13,12 +11,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useAppDispatch, useAppSelector } from 'store';
-import { clearUserData, getIsAuth, getName, getToken, getUserAvatar, setIsAuth, setUserInfo } from 'store/userData';
+import { clearUserData, getUserAvatar, setIsAuth, setUserInfo } from 'store/userData';
 import { STORAGE_KEYS, clearStorageItem } from 'utils/storage';
 import { baseInstance } from 'transport';
-import { AppBar, Box, Container, InputAdornment, TextField, Toolbar } from '@mui/material';
-import { Article } from 'shared/types/article';
-import Loader from 'shared/components/loader';
+import { AppBar, Box, Container, Toolbar } from '@mui/material';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -42,6 +38,7 @@ export const Header = () => {
   };
 
   const storedToken = localStorage.getItem('token');
+  
   useEffect(() => {
     const checkIsAuth = async () => {
       if (storedToken) {
@@ -52,6 +49,7 @@ export const Header = () => {
             },
           });
           setUserId(data.id);
+
           dispatch(setUserInfo(data));
           dispatch(setIsAuth(true));
         } catch (e) {

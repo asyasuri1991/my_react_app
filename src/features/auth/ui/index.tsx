@@ -1,21 +1,14 @@
-import { ChangeEvent, Dispatch, FormEvent, useState } from 'react';
+import {  Dispatch, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { ROUTES } from '../../../router/routes';
 import { useAppDispatch } from '../../../store';
-import { getIsLoading, getToken, setIsAuth } from '../../../store/userData';
+import { getIsLoading, setIsAuth } from '../../../store/userData';
 import { postAuthData } from '../../../store/userData/effects';
-import { AuthFormData } from '../../../store/userData/types';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import SimpleSnackbar from 'shared/components/SimpleSnackBar/SimpleSnackBar';
-import { fetchData } from 'services/users';
 import { Modal } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { baseInstance } from 'transport';
@@ -85,14 +78,6 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
     }
 
     try {
-      // const users = await fetchData();
-      // console.log(users);
-
-      // const existingEmails = users.map((item: DataItem) => item.email);
-      // if (!existingEmails.includes(dataForm.email)) {
-      //   setEmailModalNeeded(true);
-      //   return;
-      // } else 
         dispatch(postAuthData(dataForm));
         dispatch(setIsAuth(true));
         reset();
@@ -126,7 +111,6 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
                 autoComplete="email"
                 {...register('email', {
                   required: 'Почта обязательный параметр',
-
                   pattern: {
                     value:
                       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
@@ -212,7 +196,6 @@ export const SignForm = ({ visibleModal, setVisibleModal }: SignModalProps) => {
                     autoComplete="email"
                     {...register('email', {
                       required: 'Почта обязательный параметр',
-
                       pattern: {
                         value:
                           /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
