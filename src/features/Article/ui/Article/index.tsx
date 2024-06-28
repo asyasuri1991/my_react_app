@@ -136,9 +136,6 @@ export const ArticleView = ({ article }: ArticleProps) => {
           </div>
         </div>
 
-        <div>
-          <h3 className={s.postCardSubtitle}>Вам также может понравиться</h3>
-        </div>
       </div>
     </Container>
   );

@@ -1,6 +1,7 @@
 import { ArticleList } from '../features/Articles/ui/ArticleList';
 import { Slider } from 'shared/components/Slider';
 import image from 'assets/images/author.jpg';
+import image1 from 'assets/images/hand-drawn-world-vegetarian-day-illustration.png';
 import { useSearchParams } from 'react-router-dom';
 import Loader from 'shared/components/loader';
 import s from 'features/mainPage/styles.module.css';
@@ -113,7 +114,7 @@ export const MainPage = () => {
           {
             id: 2,
             text: 'Присылайте мне семейные или просто любимые рецепты на почту, и я с радостью размещу их на страницах своего блога. И не забудьте подписаться на меня в facebook, instagram и вконтакте, а читать кулинарные заметки можно в телеграм канале!',
-            image,
+            image: image1,
           },
         ]}
       />
