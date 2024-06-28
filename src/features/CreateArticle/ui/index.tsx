@@ -36,6 +36,8 @@ export const CreateArticleForm = () => {
     }
   }, [isSuccess, navigate]);
 
+  if (!userId) return;
+  
   return (
     <>
       <button className={s.addArticleButton} onClick={handleOpen}>
