@@ -44,6 +44,9 @@ export const MainPage = () => {
       .finally(() => setIsLoading(false));
   }, [searchValue]);
 
+  const titles = articles.map(obj => obj.title.toLocaleLowerCase().trim());
+  console.log(titles);
+
   return (
     <Container>
       <MainBanner />
@@ -82,7 +85,24 @@ export const MainPage = () => {
         </Tabs>
       </div>
       {isLoading && <Loader />}
-      {!!articles && !isLoading && <ArticleList articles={articles} />}
+      {!isLoading &&
+        (searchValue ? (
+          <>
+            {articles.filter(article => article.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()))
+              .length > 0 ? (
+              <ArticleList
+                articles={articles.filter(article =>
+                  article.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+                )}
+              />
+            ) : (
+              <p>Блюдо не найдено</p>
+            )}
+          </>
+        ) : (
+          <ArticleList articles={articles} />
+        ))}
+
       <Slider
         slides={[
           {
